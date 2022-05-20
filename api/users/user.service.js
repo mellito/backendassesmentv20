@@ -10,7 +10,13 @@ async function createUser(user) {
   return newUser;
 }
 
+async function getUserByEmail(email) {
+  const user = await User.findOne({ email });
+  return user;
+}
+
 module.exports = {
   getuserById,
   createUser,
+  getUserByEmail,
 };
