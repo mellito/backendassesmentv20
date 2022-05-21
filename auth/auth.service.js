@@ -14,17 +14,18 @@ async function validateToken(token) {
 
 function isAuth() {
   return compose().use(async (req, res, next) => {
-    const authHeader = req.header.authorization;
+    const authHeader = req.headers.authorization;
+
     if (!authHeader) {
       return res.status(401).end();
     }
 
-    const [, token] = authHeader.split("");
+    const [, token] = authHeader.split(" ");
     const payload = await validateToken(token);
+
     if (!payload) {
       return res.status(401).end();
     }
-
     const user = await getUserByEmail(payload.email);
     if (!user) {
       return res.status(401).end();

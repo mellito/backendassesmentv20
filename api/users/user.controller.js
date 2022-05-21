@@ -1,4 +1,9 @@
-const { getuserById, createUser, getUserByEmail } = require("./user.service");
+const {
+  getuserById,
+  createUser,
+  getUserByEmail,
+  getAllUser,
+} = require("./user.service");
 
 async function handleCreateUser(req, res) {
   try {
@@ -21,6 +26,15 @@ async function handlesGetOneUser(req, res) {
   }
 }
 
+async function handleAllUsers(req, res) {
+  try {
+    const user = await getAllUser();
+    return res.status(200).json(user);
+  } catch (error) {
+    return res.status(400).json(error);
+  }
+}
+
 async function handlerGetUserByEmail(req, res) {
   const { email } = req.body;
   const user = getUserByEmail(email);
@@ -36,4 +50,5 @@ module.exports = {
   handleCreateUser,
   handlesGetOneUser,
   handlerGetUserByEmail,
+  handleAllUsers,
 };
