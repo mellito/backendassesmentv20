@@ -1,12 +1,22 @@
-require("dotenv").config();
-
+const dotenv = require("dotenv");
 const express = require("express");
-const connectDB = require("./config/database");
+
+const envFile = process.env.NODE_ENV ? `.env.${process.env.NODE_ENV}` : ".env";
+dotenv.config({ path: envFile });
+
+const env = process.env.NODE_ENV;
+
 const configExpress = require("./config/express");
+const connectDB = require("./config/database");
+
+const routes = require("./routes");
 
 const app = express();
 
-connectDB();
-configExpress(app);
+if (env !== "test") {
+  connectDB();
+}
 
+configExpress(app);
+routes(app);
 module.exports = app;
