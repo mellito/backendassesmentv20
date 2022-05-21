@@ -5,12 +5,24 @@ async function getuserById(id) {
   return user;
 }
 
+async function getAllUser() {
+  const user = await User.find();
+  return user;
+}
+
 async function createUser(user) {
   const newUser = await User.create(user);
   return newUser;
 }
 
+async function getUserByEmail(email) {
+  const user = await User.findOne({ email });
+  return user;
+}
+
 module.exports = {
   getuserById,
   createUser,
+  getUserByEmail,
+  getAllUser,
 };
